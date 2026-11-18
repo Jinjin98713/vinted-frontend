@@ -1,0 +1,387 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ========================= */
+/* GLOBALS */
+/* ========================= */
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+header {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-container {
+  max-width: 1280px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+/* Logo Vinted */
+
+.logo-container {
+  flex-shrink: 0;
+}
+
+.logo-container img {
+  display: block;
+  width: 100px;
+  height: auto;
+}
+
+/* Barre de recherche */
+
+.search-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-container input {
+  width: 100%;
+  height: 38px;
+  padding: 0 15px;
+
+  background-color: #f1f4f4;
+  border: none;
+  border-radius: 5px;
+
+  font-size: 14px;
+  outline: none;
+}
+
+/* Boutons */
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.account-buttons {
+  display: flex;
+  border: 1px solid #007f88;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.account-buttons button {
+  padding: 10px 12px;
+  background-color: white;
+  color: #007f88;
+  border: none;
+
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sell-button {
+  padding: 11px 14px;
+  background-color: #007f88;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* HERO SECTION */
+/* ========================= */
+
+.hero {
+  height: 300px;
+  background: linear-gradient(120deg, #007f88, #b7e4df);
+  display: flex;
+  align-items: center;
+  padding: 40px;
+}
+
+.hero h1 {
+  color: white;
+  font-size: 32px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ========================= */
+/* CARD */
+/* ========================= */
+
+/* Section des annonces */
+
+.home-offers {
+  padding: 30px 20px 60px;
+  background-color: white;
+}
+
+.home-offers h2 {
+  max-width: 1180px;
+  margin: 0 auto 25px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #252525;
+}
+
+/* Conteneur des annonces */
+
+.offers-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px 20px;
+  flex-wrap: wrap;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Carte d'une annonce */
+
+.offer-card {
+  width: 220px;
+  cursor: pointer;
+}
+
+.offers-container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Informations du vendeur */
+
+.offer-seller {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.offer-seller img {
+  display: block;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.offer-seller p {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Image du produit */
+
+.offer-image img {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Informations du produit */
+
+.offer-details {
+  padding-top: 8px;
+}
+
+.offer-details p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #777;
+}
+
+/* Nom du produit */
+
+.offer-details p:first-child {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+/* Prix du produit */
+
+.offer-details p:nth-child(2) {
+  color: #252525;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* ========================= */
+/* PAGE OFFER */
+/* ========================= */
+
+/* Fond gris sur toute la page */
+
+.offer-page-background {
+  background-color: #ebedee;
+  min-height: calc(100vh - 60px);
+}
+
+/* Conteneur des deux colonnes */
+
+.offer-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+/* Image du produit */
+
+.offer-page-image {
+  width: 55%;
+  min-width: 0;
+}
+
+.offer-page-image img {
+  display: block;
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+}
+
+/* Encart blanc des informations */
+
+.offer-page-details {
+  width: 400px;
+  flex-shrink: 0;
+  padding: 40px;
+
+  background-color: white;
+}
+
+/* ========================= */
+/* PRIX ET CARACTERISTIQUES */
+/* ========================= */
+
+.offer-page-infos {
+  padding-bottom: 35px;
+  margin-bottom: 35px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Prix */
+
+.offer-page-price {
+  font-size: 24px;
+  font-weight: 400;
+  color: #252525;
+  margin-bottom: 25px;
+}
+
+/* Liste des caractéristiques */
+
+.offer-page-characteristics {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Une ligne : nom + valeur */
+
+.offer-page-characteristic-row {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Nom de la caractéristique */
+
+.offer-page-characteristic-name {
+  width: 45%;
+  flex-shrink: 0;
+  color: #999;
+}
+
+/* Valeur de la caractéristique */
+
+.offer-page-characteristic-value {
+  flex: 1;
+  color: #555;
+  font-weight: 600;
+}
+
+/* ========================= */
+/* DESCRIPTION ET VENDEUR */
+/* ========================= */
+
+.offer-page-description h2 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #252525;
+  margin-bottom: 15px;
+}
+
+.offer-page-description > p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #777;
+}
+
+/* Informations du vendeur */
+
+.offer-page-seller {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 60px;
+}
+
+.offer-page-seller img {
+  display: block;
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.offer-page-seller p {
+  font-size: 14px;
+  color: #252525;
+}
+
+/* ========================= */
+/* BOUTON ACHETER */
+/* ========================= */
+
+.offer-page-details button {
+  width: 100%;
+  padding: 12px;
+
+  background-color: #00b5b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.offer-page-details button:hover {
+  background-color: #008f96;
+}
