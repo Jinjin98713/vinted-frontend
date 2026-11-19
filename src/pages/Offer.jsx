@@ -10,14 +10,14 @@ const Offer = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    console.log("useEffect");
+    //console.log("useEffect");
 
     const fetchData = async () => {
       const response = await axios.get(
         "https://lereacteur-vinted-api.herokuapp.com/offer/" + params.id,
       );
 
-      console.log(response.data);
+      //console.log(response.data);
 
       // On récupère les informations de l'annonce
       setData(response.data);
