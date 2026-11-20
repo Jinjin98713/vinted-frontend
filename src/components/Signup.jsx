@@ -45,7 +45,8 @@ const Signup = ({ setToken, setVisible }) => {
       //console.log(response.data);
     } catch (error) {
       // Si la requête échoue, affiche le message d'erreur
-      console.log("Erreur Axios :", error.message);
+      console.log("Réponse du serveur :", error.response?.data);
+      //console.log("Erreur Axios :", error.message);
       //console.log("Réponse du serveur :", error.response?.data);{"message": "Missing parameters"}
     }
   };

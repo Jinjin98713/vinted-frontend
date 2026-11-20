@@ -1,4 +1,5 @@
 import Signup from "./Signup";
+import Login from "./Login";
 const Modal = ({ setVisible, activeTab, setActiveTab, setToken }) => {
   return (
     <div
@@ -14,22 +15,32 @@ const Modal = ({ setVisible, activeTab, setActiveTab, setToken }) => {
           event.stopPropagation();
         }}
       >
-        <button
-          onClick={() => {
-            setActiveTab("signup");
-          }}
-        >
-          S'inscrire
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab("login");
-          }}
-        >
-          Se connecter
-        </button>
+        <div className="modal-tabs">
+          <button
+            type="button"
+            className={activeTab === "signup" ? "active" : ""}
+            onClick={() => {
+              setActiveTab("signup");
+            }}
+          >
+            S'inscrire
+          </button>
+
+          <button
+            type="button"
+            className={activeTab === "login" ? "active" : ""}
+            onClick={() => {
+              setActiveTab("login");
+            }}
+          >
+            Se connecter
+          </button>
+        </div>
         {activeTab === "login" ? (
-          <h2>Formulaire de connexion</h2>
+          <>
+            <h2>Formulaire de connexion</h2>
+            <Login setToken={setToken} setVisible={setVisible} />
+          </>
         ) : (
           <Signup setToken={setToken} setVisible={setVisible} />
         )}

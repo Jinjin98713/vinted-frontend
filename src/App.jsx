@@ -15,6 +15,8 @@ function App() {
   const [visible, setVisible] = useState(false);
   //console.log("visible :", visible);
 
+  const [search, setSearch] = useState("");
+
   const [activeTab, setActiveTab] = useState("login");
 
   const [token, setToken] = useState(Cookie.get("token") || null);
@@ -24,7 +26,7 @@ function App() {
 
     const fetchData = async () => {
       const response = await axios.get(
-        "https://lereacteur-vinted-api.herokuapp.com/offers",
+        "https://lereacteur-vinted-api.herokuapp.com/offers?title=" + search,
       );
 
       //console.log(response.data); //{count: 32, offers: Array(32)}
@@ -38,7 +40,7 @@ function App() {
 
     fetchData();
     // Le deuxième argument du useEffect est appelé tableau de dépendances !
-  }, []);
+  }, [search]);
 
   return (
     <Router>
@@ -48,6 +50,8 @@ function App() {
         setVisible={setVisible}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        search={search}
+        setSearch={setSearch}
       />
 
       {isLoading ? (

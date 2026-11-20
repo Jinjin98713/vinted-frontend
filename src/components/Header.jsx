@@ -1,9 +1,30 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/Vinted_logo.png";
+import DefaultAvatar from "../assets/avatard_3D.png";
 import Cookie from "js-cookie";
+import { useState } from "react";
 
 const Header = (props) => {
-  const { token, setToken, setVisible, activeTab, setActiveTab } = props;
+  const { token, setToken, setVisible, setActiveTab, search, setSearch } =
+    props;
+  console.log("Recherche :", search);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState(search);
+
+  const searchOnChange = (event) => {
+    // Récupère le texte saisi sans déclencher de recherche
+    const value = event.target.value;
+    setSearchInput(value);
+  };
+
+  const handleSearch = (event) => {
+    // Empêche le rechargement de la page lors de la soumission
+    event.preventDefault();
+
+    // Met à jour le state search dans App.jsx pour lancer la recherche
+    setSearch(searchInput);
+  };
+
   return (
     <header>
       <div className="header-container">
@@ -15,40 +36,61 @@ const Header = (props) => {
         </div>
 
         {/* Barre de recherche */}
-        <div className="search-container">
+        <form onSubmit={handleSearch} className="search-container">
           <input
             type="search"
             name="search_text"
             id="search_text"
             placeholder="Rechercher des articles"
+            value={searchInput}
+            onChange={searchOnChange}
           />
-        </div>
+        </form>
 
         {/* Boutons du compte */}
         <div className="header-buttons">
-          <div className="account-buttons">
+          <div
+            className={token ? "account-buttons connected" : "account-buttons"}
+          >
             {token ? (
-              <button
-                onClick={() => {
-                  //je change l'état du token à false
-                  setToken(null);
-                  //je supprime le token
-                  Cookie.remove("token");
-                }}
-              >
-                Se déconnecter
-              </button>
+              <div className="user-menu">
+                <button
+                  className="avatar-button"
+                  onClick={() => {
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                >
+                  <img src={DefaultAvatar} alt="Avatar utilisateur" />
+                </button>
+
+                {isMenuOpen && (
+                  <div className="user-dropdown">
+                    <p>Vends tes articles</p>
+
+                    <button
+                      className="logout-button"
+                      onClick={() => {
+                        setToken(null);
+                        Cookie.remove("token");
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      Se déconnecter
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <button
                   onClick={() => {
-                    //console.log("Clic sur S'inscrire"); ok
                     setActiveTab("signup");
                     setVisible(true);
                   }}
                 >
                   S'inscrire
                 </button>
+
                 <button
                   onClick={() => {
                     setActiveTab("login");
