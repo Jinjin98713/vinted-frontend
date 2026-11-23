@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ElmoAvatar from "../assets/avatar_elmo.png";
 
 const Offer = () => {
   // Récupérer l'identifiant ici
@@ -81,9 +82,14 @@ const Offer = () => {
 
               <div className="offer-page-seller">
                 <img
-                  src={data.owner.account.avatar.secure_url}
+                  src={
+                    data.owner.account.avatar
+                      ? data.owner.account.avatar.secure_url
+                      : ElmoAvatar
+                  }
                   alt={data.owner.account.username}
                 />
+
                 <p>{data.owner.account.username}</p>
               </div>
 

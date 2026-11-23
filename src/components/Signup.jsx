@@ -123,8 +123,6 @@ const Signup = ({ setToken, setVisible }) => {
             checked={newsletter}
             onChange={onNewsletterChange}
           />
-
-          {/* htmlFor permet de cocher la case en cliquant sur le texte */}
           <label htmlFor="newsletter">S'inscrire à notre newsletter</label>
 
           <p>

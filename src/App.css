@@ -253,6 +253,9 @@ header {
 .offer-page-image {
   width: 55%;
   min-width: 0;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
 }
 
 .offer-page-image img {
@@ -611,4 +614,130 @@ header {
 .user-dropdown p:hover,
 .user-dropdown button:hover {
   background-color: #f1f4f4;
+}
+
+/* ========================= */
+/* PAGE PUBLISH */
+/* ========================= */
+
+/* Titre de la page */
+
+.publish-title {
+  max-width: 900px;
+  margin: 30px auto 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #252525;
+}
+
+/* Conteneur des différentes sections */
+
+.publish-page {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Blocs blancs du formulaire */
+
+.publish-page > div {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+/* Titres des sections */
+
+.publish-page h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #252525;
+}
+
+/* Organisation des champs */
+
+.publish-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Libellés des champs */
+
+.publish-page h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Champs de saisie */
+
+.publish-page input:not([type="checkbox"]),
+.publish-page textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  outline-color: #007f88;
+  margin-bottom: 15px;
+}
+
+/* Champ description */
+
+.publish-page textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Checkbox */
+
+.publish-page input[type="checkbox"] {
+  accent-color: #007f88;
+}
+
+.publish-page label {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Aperçu de la photo sélectionnée */
+
+.publish-preview {
+  display: block;
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+}
+
+/* Conteneur de l'aperçu */
+
+.preview-img {
+  position: relative;
+  width: 180px;
+  margin-top: 15px;
+}
+
+/* Bouton de suppression */
+
+.delete-images {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
 }

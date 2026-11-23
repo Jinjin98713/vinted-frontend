@@ -1,6 +1,6 @@
-/* import { AiFillPicture } from "react-icons/ai"; */
-
 import { Link } from "react-router-dom";
+import ElmoAvatar from "../assets/avatar_elmo.png";
+import DefaultAvatar from "../assets/avatard_3D.png";
 
 const Home = ({ offers }) => {
   return (
@@ -25,7 +25,13 @@ const Home = ({ offers }) => {
                   <div className="offer-seller">
                     <p>
                       <img
-                        src={offer.owner.account.avatar.secure_url}
+                        src={
+                          offer.owner.account.avatar
+                            ? offer.owner.account.avatar.secure_url
+                            : offer.owner.account.username === "Tev"
+                              ? ElmoAvatar
+                              : DefaultAvatar
+                        }
                         alt={offer.owner.account.username}
                       />
                     </p>

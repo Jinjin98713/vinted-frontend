@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/Vinted_logo.png";
-import DefaultAvatar from "../assets/avatard_3D.png";
+import DefaultAvatar from "../assets/avatar_elmo.png";
 import Cookie from "js-cookie";
 import { useState } from "react";
 
 const Header = (props) => {
   const { token, setToken, setVisible, setActiveTab, search, setSearch } =
     props;
-  console.log("Recherche :", search);
+  //console.log("Recherche :", search);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(search);
 
