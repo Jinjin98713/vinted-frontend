@@ -1,20 +1,27 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/Vinted_logo.png";
-import DefaultAvatar from "../assets/avatar_elmo.png";
+import DefaultAvatar from "../assets/avatar_elmo.png"; // Avatar affiché dans le Header connecté
 import Cookie from "js-cookie";
 import { useState } from "react";
 
 const Header = (props) => {
   const { token, setToken, setVisible, setActiveTab, search, setSearch } =
     props;
-  //console.log("Recherche :", search);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Texte saisi localement : la recherche ne part qu'à la validation du formulaire.
   const [searchInput, setSearchInput] = useState(search);
 
   const searchOnChange = (event) => {
-    // Récupère le texte saisi sans déclencher de recherche
+    // Récupère le texte saisi
     const value = event.target.value;
+
+    // Met à jour le texte affiché dans l'input
     setSearchInput(value);
+
+    // Si le champ est vidé, réinitialise les résultats
+    if (value === "") {
+      setSearch("");
+    }
   };
 
   const handleSearch = (event) => {
@@ -30,7 +37,16 @@ const Header = (props) => {
       <div className="header-container">
         {/* Logo Vinted */}
         <div className="logo-container">
-          <Link to="/">
+          <Link
+            to="/"
+            onClick={() => {
+              // Réinitialise le champ de recherche
+              setSearchInput("");
+
+              // Réinitialise les résultats de recherche
+              setSearch("");
+            }}
+          >
             <img src={Logo} alt="Logo Vinted" />
           </Link>
         </div>
@@ -55,6 +71,7 @@ const Header = (props) => {
             {token ? (
               <div className="user-menu">
                 <button
+                  type="button"
                   className="avatar-button"
                   onClick={() => {
                     setIsMenuOpen(!isMenuOpen);
@@ -65,9 +82,11 @@ const Header = (props) => {
 
                 {isMenuOpen && (
                   <div className="user-dropdown">
-                    <p>Vends tes articles</p>
-
+                    <Link to="/publish" onClick={() => setIsMenuOpen(false)}>
+                      Vends tes articles
+                    </Link>
                     <button
+                      type="button"
                       className="logout-button"
                       onClick={() => {
                         setToken(null);
@@ -83,6 +102,7 @@ const Header = (props) => {
             ) : (
               <>
                 <button
+                  type="button"
                   onClick={() => {
                     setActiveTab("signup");
                     setVisible(true);
@@ -92,6 +112,7 @@ const Header = (props) => {
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => {
                     setActiveTab("login");
                     setVisible(true);
@@ -102,8 +123,20 @@ const Header = (props) => {
               </>
             )}
           </div>
-
-          <button className="sell-button">Vends tes articles</button>
+          {token ? (
+            <Link to="/publish" className="sell-button">
+              Vends tes articles
+            </Link>
+          ) : (
+            // La page /login mémorise qu'on souhaite accéder à /publish.
+            <Link
+              to="/login?ref_url=%2Fpublish"
+              className="sell-button"
+              onClick={() => setActiveTab("login")}
+            >
+              Vends tes articles
+            </Link>
+          )}
         </div>
       </div>
     </header>

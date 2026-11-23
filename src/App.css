@@ -1,16 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-/* ========================= */
-/* GLOBALS */
-/* ========================= */
+/* ========================================================================== */
+/* 01 - STYLES GLOBAUX */
+/* ========================================================================== */
 
 body {
   font-family: "Inter", sans-serif;
 }
 
-/* ========================= */
-/* HEADER */
-/* ========================= */
+/* ========================================================================== */
+/* 02 - HEADER / NAVIGATION */
+/* ========================================================================== */
 
 header {
   width: 100%;
@@ -93,15 +93,102 @@ header {
   color: white;
   border: none;
   border-radius: 5px;
+  text-decoration: none;
 
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
 }
 
-/* ========================= */
-/* HERO SECTION */
-/* ========================= */
+/* ========================================================================== */
+/* 02.1 - HEADER / MENU UTILISATEUR */
+/* ========================================================================== */
+
+/* Le groupe de boutons n'a pas de bordure quand on est connecté */
+.account-buttons.connected {
+  border: none;
+}
+
+/* Arrondis des boutons S'inscrire / Se connecter uniquement */
+.account-buttons > button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.account-buttons > button:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+/* Conteneur de référence pour positionner le menu */
+.user-menu {
+  position: relative;
+}
+
+/* Avatar : sélecteur plus précis que .account-buttons button */
+.account-buttons .avatar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: #f1f4f4;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* L'image occupe tout le cercle */
+.avatar-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Menu affiché sous l'avatar */
+.user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 220px;
+  padding: 8px 0;
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 20;
+}
+
+/* Même apparence pour les deux options du menu */
+.user-dropdown a,
+.user-dropdown p,
+.user-dropdown button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  background-color: white;
+  color: #444;
+  border: none;
+  border-radius: 0;
+  text-decoration: none;
+  text-align: left;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.user-dropdown a:hover,
+.user-dropdown p:hover,
+.user-dropdown button:hover {
+  background-color: #f1f4f4;
+}
+
+/* ========================================================================== */
+/* 03 - HOME / BANNIERE HERO */
+/* ========================================================================== */
 
 .hero {
   height: 300px;
@@ -119,9 +206,9 @@ header {
   margin: 0 auto;
 }
 
-/* ========================= */
-/* CARD */
-/* ========================= */
+/* ========================================================================== */
+/* 04 - HOME / CARTES DES ANNONCES */
+/* ========================================================================== */
 
 /* Section des annonces */
 
@@ -224,9 +311,9 @@ header {
   margin-bottom: 4px;
 }
 
-/* ========================= */
-/* PAGE OFFER */
-/* ========================= */
+/* ========================================================================== */
+/* 05 - PAGE OFFER / STRUCTURE */
+/* ========================================================================== */
 
 /* Fond gris sur toute la page */
 
@@ -275,9 +362,9 @@ header {
   background-color: white;
 }
 
-/* ========================= */
-/* PRIX ET CARACTERISTIQUES */
-/* ========================= */
+/* ========================================================================== */
+/* 05.1 - PAGE OFFER / PRIX ET CARACTERISTIQUES */
+/* ========================================================================== */
 
 .offer-page-infos {
   padding-bottom: 35px;
@@ -327,9 +414,9 @@ header {
   font-weight: 600;
 }
 
-/* ========================= */
-/* DESCRIPTION ET VENDEUR */
-/* ========================= */
+/* ========================================================================== */
+/* 05.2 - PAGE OFFER / DESCRIPTION ET VENDEUR */
+/* ========================================================================== */
 
 .offer-page-description h2 {
   font-size: 16px;
@@ -367,9 +454,9 @@ header {
   color: #252525;
 }
 
-/* ========================= */
-/* BOUTON ACHETER */
-/* ========================= */
+/* ========================================================================== */
+/* 05.3 - PAGE OFFER / BOUTON ACHETER */
+/* ========================================================================== */
 
 .offer-page-details button {
   width: 100%;
@@ -389,9 +476,9 @@ header {
   background-color: #008f96;
 }
 
-/* ========================= */
-/* SPINNER LOADER */
-/* ========================= */
+/* ========================================================================== */
+/* 06 - CHARGEMENT / SPINNER */
+/* ========================================================================== */
 
 .loading-container {
   min-height: 300px;
@@ -422,9 +509,9 @@ header {
   }
 }
 
-/* ========================= */
-/* MODAL */
-/* ========================= */
+/* ========================================================================== */
+/* 07 - MODALE / CONTENEUR */
+/* ========================================================================== */
 .modal-root {
   position: fixed;
   top: 0;
@@ -445,9 +532,9 @@ header {
   border-radius: 10px;
 }
 
-/* ========================= */
-/* FORMULAIRES MODAL */
-/* ========================= */
+/* ========================================================================== */
+/* 07.1 - MODALE / FORMULAIRES ET ONGLETS */
+/* ========================================================================== */
 
 .modal h2 {
   font-size: 20px;
@@ -533,92 +620,9 @@ header {
   background-color: #00676f;
 }
 
-/* ========================= */
-/* MENU UTILISATEUR */
-/* ========================= */
-
-/* Le groupe de boutons n'a pas de bordure quand on est connecté */
-.account-buttons.connected {
-  border: none;
-}
-
-/* Arrondis des boutons S'inscrire / Se connecter uniquement */
-.account-buttons > button:first-child {
-  border-radius: 5px 0 0 5px;
-}
-
-.account-buttons > button:last-child {
-  border-radius: 0 5px 5px 0;
-}
-
-/* Conteneur de référence pour positionner le menu */
-.user-menu {
-  position: relative;
-}
-
-/* Avatar : sélecteur plus précis que .account-buttons button */
-.account-buttons .avatar-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background-color: #f1f4f4;
-  border: 1px solid #e5e5e5;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-/* L'image occupe tout le cercle */
-.avatar-button img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Menu affiché sous l'avatar */
-.user-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 220px;
-  padding: 8px 0;
-  background-color: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 20;
-}
-
-/* Même apparence pour les deux options du menu */
-.user-dropdown p,
-.user-dropdown button {
-  display: block;
-  width: 100%;
-  margin: 0;
-  padding: 12px 16px;
-  background-color: white;
-  color: #444;
-  border: none;
-  border-radius: 0;
-  text-align: left;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.user-dropdown p:hover,
-.user-dropdown button:hover {
-  background-color: #f1f4f4;
-}
-
-/* ========================= */
-/* PAGE PUBLISH */
-/* ========================= */
+/* ========================================================================== */
+/* 08 - PAGE PUBLISH / PUBLICATION */
+/* ========================================================================== */
 
 /* Titre de la page */
 
@@ -656,14 +660,6 @@ header {
   font-weight: 600;
   margin-bottom: 20px;
   color: #252525;
-}
-
-/* Organisation des champs */
-
-.publish-page form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
 /* Libellés des champs */
@@ -740,4 +736,107 @@ header {
   background-color: white;
   color: #333;
   cursor: pointer;
+}
+
+/* ========================================================================== */
+/* 09 - PAGE LOGIN / SIGNUP */
+/* ========================================================================== */
+
+.login-page {
+  min-height: calc(100vh - 60px);
+  background-color: #ebedee;
+  padding: 60px 20px;
+}
+
+.login-page-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 35px 30px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.login-page-card h1 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.login-page-card > p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Boutons de sélection Login / Signup */
+
+.login-page-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.login-page-tabs button {
+  flex: 1;
+  padding: 12px 8px;
+  background-color: white;
+  color: #007f88;
+  border: 1px solid #007f88;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Onglet actif : ajouter className={activeTab === "login" ? "active" : ""} en JSX */
+
+.login-page-tabs button.active {
+  background-color: #007f88;
+  color: white;
+}
+
+/* Formulaires */
+
+.login-page-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-page-card form input:not([type="checkbox"]) {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.login-page-card form button[type="submit"] {
+  padding: 13px;
+  background-color: #007f88;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-page-card form button[type="submit"]:hover {
+  background-color: #00676f;
+}
+
+.login-page-card form label,
+.login-page-card form p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.login-page-card h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 10px;
 }

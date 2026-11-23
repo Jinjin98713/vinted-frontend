@@ -2,39 +2,40 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ElmoAvatar from "../assets/avatar_elmo.png";
+import DefaultAvatar from "../assets/avatard_3D.png";
 
 const Offer = () => {
-  // Récupérer l'identifiant ici
+  // Récupère l’identifiant de l’annonce depuis l’URL /offers/:id
   const params = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
 
   useEffect(() => {
-    //console.log("useEffect");
-
     const fetchData = async () => {
-      const response = await axios.get(
-        "https://lereacteur-vinted-api.herokuapp.com/offer/" + params.id,
-      );
-
-      //console.log(response.data);
-
-      // On récupère les informations de l'annonce
-      setData(response.data);
-
-      // Une fois les données récupérées, on arrête le chargement
-      setIsLoading(false);
+      try {
+        const response = await axios.get(
+          "https://lereacteur-vinted-api.herokuapp.com/offer/" + params.id,
+        );
+        // Enregistre les données de l'annonce reçues de l'API.
+        setData(response.data);
+      } catch (error) {
+        console.log("Erreur lors du chargement de l'annonce :", error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchData();
-    // Le deuxième argument du useEffect est appelé tableau de dépendances !
+    // Une nouvelle URL /offers/:id recharge les informations correspondantes.
   }, [params.id]);
 
   return (
     <main className="offer-page-background">
       {isLoading ? (
         <p>Chargement...</p>
+      ) : !data._id ? (
+        <p>Impossible de charger cette annonce.</p>
       ) : (
         <section className="offer-page">
           {/* Image du produit */}
@@ -81,11 +82,14 @@ const Offer = () => {
               <p>{data.product_description}</p>
 
               <div className="offer-page-seller">
+                {/* Réutilise le même avatar de secours que sur la Home. */}
                 <img
                   src={
                     data.owner.account.avatar
                       ? data.owner.account.avatar.secure_url
-                      : ElmoAvatar
+                      : data.owner.account.username === "Tev"
+                        ? ElmoAvatar
+                        : DefaultAvatar
                   }
                   alt={data.owner.account.username}
                 />

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookie from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-const Signup = ({ setToken, setVisible }) => {
+// Le même formulaire sert à la modale et à la page de connexion.
+const Signup = ({ setToken, setVisible, redirectTo = null }) => {
+  const navigate = useNavigate();
   // States pour stocker les informations saisies dans le formulaire
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +16,6 @@ const Signup = ({ setToken, setVisible }) => {
   const handleSubmit = async (event) => {
     // Empêche le rechargement de la page lors de la soumission
     event.preventDefault();
-    //console.log("Formulaire envoyé !");
 
     try {
       // Envoie les données du formulaire à l'API avec une requête POST
@@ -38,16 +40,17 @@ const Signup = ({ setToken, setVisible }) => {
       // Le Header pourra alors afficher l'état connecté
       setToken(token);
 
-      // Ferme la modale après une inscription réussie
+      // Ferme la modale si elle est ouverte.
       setVisible(false);
 
-      // Affiche la réponse de l'API pour vérifier le résultat
-      //console.log(response.data);
+      // Une inscription depuis /login permet ensuite de publier l'annonce.
+      if (redirectTo) {
+        navigate(redirectTo, { replace: true });
+      }
     } catch (error) {
       // Si la requête échoue, affiche le message d'erreur
       console.log("Réponse du serveur :", error.response?.data);
-      //console.log("Erreur Axios :", error.message);
-      //console.log("Réponse du serveur :", error.response?.data);{"message": "Missing parameters"}
+      // L'API peut par exemple signaler des champs manquants.
     }
   };
 

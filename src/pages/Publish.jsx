@@ -15,6 +15,7 @@ const Publish = ({ token }) => {
   });
 
   const [price, setPrice] = useState("");
+  // La checkbox reste dans l'interface ; l'API ne prévoit pas ce champ.
   const [exchangesCheckBox, setExchangesCheckBox] = useState(false);
 
   // States pour le fichier sélectionné et son aperçu
@@ -64,6 +65,7 @@ const Publish = ({ token }) => {
     event.preventDefault();
 
     try {
+      // FormData permet d'envoyer les champs et le fichier en une requête.
       const formData = new FormData();
       formData.append("title", formValues.title);
       formData.append("description", formValues.description);
@@ -75,6 +77,7 @@ const Publish = ({ token }) => {
       formData.append("city", formValues.city);
       formData.append("picture", picture);
 
+      // Le backend reçoit le token dans le header Authorization.
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
         formData,
@@ -84,8 +87,7 @@ const Publish = ({ token }) => {
           },
         },
       );
-      console.log("Réponse API :", response.data);
-
+      // L’API renvoie l’identifiant de l’annonce créée : on affiche sa page.
       if (response.data._id) {
         navigate("/offers/" + response.data._id);
       }

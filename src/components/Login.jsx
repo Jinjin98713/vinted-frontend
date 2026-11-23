@@ -1,8 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookie from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ setToken, setVisible }) => {
+// redirectTo est fourni uniquement depuis LoginPage ; la modale conserve
+// ainsi son comportement de fermeture sans changer de page.
+const Login = ({ setToken, setVisible, redirectTo = null }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,7 +14,6 @@ const Login = ({ setToken, setVisible }) => {
   const handleSubmit = async (event) => {
     // Empêche le rechargement de la page lors de la soumission
     event.preventDefault();
-    //console.log("Formulaire envoyé !");
 
     try {
       // Envoie les données du formulaire à l'API avec une requête POST
@@ -33,15 +36,16 @@ const Login = ({ setToken, setVisible }) => {
       // Le Header pourra alors afficher l'état connecté
       setToken(token);
 
-      // Ferme la modale après une inscription réussie
+      // Ferme la modale si elle est ouverte.
       setVisible(false);
 
-      // Affiche la réponse de l'API pour vérifier le résultat
-      //console.log(response.data);
+      // Depuis /login, revient au formulaire de publication après connexion.
+      if (redirectTo) {
+        navigate(redirectTo, { replace: true });
+      }
     } catch (error) {
       // Si la requête échoue, affiche le message d'erreur
       console.log("Erreur Axios :", error.message);
-      //console.log("Réponse du serveur :", error.response?.data);
     }
   };
 

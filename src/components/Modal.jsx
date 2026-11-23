@@ -1,5 +1,7 @@
 import Signup from "./Signup";
 import Login from "./Login";
+
+// Cette modale est utilisée par les boutons de compte du Header.
 const Modal = ({ setVisible, activeTab, setActiveTab, setToken }) => {
   return (
     <div
@@ -11,10 +13,11 @@ const Modal = ({ setVisible, activeTab, setActiveTab, setToken }) => {
       <div
         className="modal"
         onClick={(event) => {
-          //évite de fermer la modal au clic dans le cadre blanc
+          // Empêche la fermeture quand on clique dans la fenêtre blanche.
           event.stopPropagation();
         }}
       >
+        {/* Deux onglets réutilisant les formulaires Login et Signup. */}
         <div className="modal-tabs">
           <button
             type="button"

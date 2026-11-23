@@ -2,17 +2,21 @@ import { Link } from "react-router-dom";
 import ElmoAvatar from "../assets/avatar_elmo.png";
 import DefaultAvatar from "../assets/avatard_3D.png";
 
-const Home = ({ offers }) => {
+const Home = ({ offers, search }) => {
   return (
     <main>
-      <section className="hero">
-        <h1>Prêts à faire du tri dans vos placards ?</h1>
-      </section>
+      {/* Affiche la bannière uniquement lorsqu'aucune recherche n'est active */}
+      {!search && (
+        <section className="hero">
+          <h1>Prêts à faire du tri dans vos placards ?</h1>
+        </section>
+      )}
 
       <section className="home-offers">
         <h2>Annonces récentes</h2>
         <div className="offers-container">
           {offers.map((offer) => {
+            // Recherche la marque et la taille parmi les caractéristiques.
             const brand = offer.product_details.find((detail) => {
               return detail.MARQUE;
             });
@@ -24,6 +28,7 @@ const Home = ({ offers }) => {
                 <article className="offer-card">
                   <div className="offer-seller">
                     <p>
+                      {/* Avatar du vendeur, sinon image de secours selon son pseudo. */}
                       <img
                         src={
                           offer.owner.account.avatar
