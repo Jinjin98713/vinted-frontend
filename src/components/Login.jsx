@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookie from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // redirectTo est fourni uniquement depuis LoginPage ; la modale conserve
 // ainsi son comportement de fermeture sans changer de page.
 const Login = ({ setToken, setVisible, redirectTo = null }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,9 +40,12 @@ const Login = ({ setToken, setVisible, redirectTo = null }) => {
       // Ferme la modale si elle est ouverte.
       setVisible(false);
 
-      // Depuis /login, revient au formulaire de publication après connexion.
+      // Après connexion, redirige vers la page demandée en conservant les données transmises.
       if (redirectTo) {
-        navigate(redirectTo, { replace: true });
+        navigate(redirectTo, {
+          replace: true,
+          state: location.state,
+        });
       }
     } catch (error) {
       // Si la requête échoue, affiche le message d'erreur

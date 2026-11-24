@@ -14,6 +14,7 @@ import Offer from "./pages/Offer";
 import Modal from "./components/Modal";
 import Publish from "./pages/Publish";
 import LoginPage from "./pages/LoginPage";
+import Payment from "./pages/Payment";
 
 function App() {
   const [offers, setOffers] = useState([]);
@@ -35,10 +36,13 @@ function App() {
       // Une nouvelle recherche déclenche un nouvel affichage de chargement.
       setIsLoading(true);
       try {
+        // Récupère les annonces correspondant à la recherche de l'utilisateur.
         const response = await axios.get(
           "https://lereacteur-vinted-api.herokuapp.com/offers?title=" +
             encodeURIComponent(search),
         );
+        // encodeURIComponent() adapte le texte recherché pour son utilisation dans une URL.
+        // Par exemple, "Nike & Adidas" devient "Nike%20%26%20Adidas".
         // Le backend renvoie notamment { count, offers }.
         setOffers(response.data.offers);
       } catch (error) {
@@ -105,6 +109,16 @@ function App() {
               setToken={setToken}
               setVisible={setVisible}
             />
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            token ? (
+              <Payment />
+            ) : (
+              <Navigate to="/login?ref_url=%2Fpayment" replace />
+            )
           }
         />
       </Routes>

@@ -4,19 +4,30 @@ import { useLocation } from "react-router-dom";
 
 // Réutilise Login et Signup sans réouvrir la modale sur la page /login.
 const LoginPage = ({ activeTab, setToken, setVisible, setActiveTab }) => {
-  // Lit le paramètre ref_url de /login?ref_url=%2Fpublish.
+  // Lit la destination demandée depuis /login (publication ou paiement).
   const location = useLocation();
   const requestedPage = new URLSearchParams(location.search).get("ref_url");
 
-  // On accepte uniquement cette destination interne pour notre exercice.
-  const redirectTo = requestedPage === "/publish" ? "/publish" : null;
+  // Autorise uniquement les deux destinations prévues par notre application.
+  const redirectTo =
+    requestedPage === "/publish" || requestedPage === "/payment"
+      ? requestedPage
+      : null;
 
   return (
     <main className="login-page">
       <div className="login-page-card">
-        <h1>Prêt à vendre ton article ?</h1>
+        <h1>
+          {redirectTo === "/payment"
+            ? "Prêt à acheter ton article ?"
+            : "Prêt à vendre ton article ?"}
+        </h1>
 
-        <p>Connecte-toi ou crée un compte pour publier ton annonce.</p>
+        <p>
+          {redirectTo === "/payment"
+            ? "Connecte-toi ou crée un compte pour continuer ton achat."
+            : "Connecte-toi ou crée un compte pour publier ton annonce."}
+        </p>
 
         {/* Les onglets changent le formulaire sans ouvrir la modale. */}
         <div className="login-page-tabs">

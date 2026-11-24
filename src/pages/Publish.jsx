@@ -21,6 +21,8 @@ const Publish = ({ token }) => {
   // States pour le fichier sélectionné et son aperçu
   const [picture, setPicture] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  // Permet de réinitialiser le champ fichier lorsque la photo est supprimée.
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   const navigate = useNavigate();
 
@@ -54,7 +56,12 @@ const Publish = ({ token }) => {
       // Enregistre le fichier dans le state picture
       setPicture(file);
 
-      // Crée une URL temporaire pour afficher l'image
+      // Libère l'ancien aperçu si une autre photo est choisie.
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+
+      // Crée une URL temporaire pour afficher l'image.
       const url = URL.createObjectURL(file);
       setImageUrl(url);
     }
@@ -108,7 +115,12 @@ const Publish = ({ token }) => {
           <h2>Photos</h2>
 
           {/* Permet de sélectionner une image */}
-          <input type="file" accept="image/*" onChange={pictureOnChange} />
+          <input
+            key={fileInputKey}
+            type="file"
+            accept="image/*"
+            onChange={pictureOnChange}
+          />
 
           {/* Affiche l'aperçu uniquement si une image a été sélectionnée */}
           {picture && (
@@ -130,6 +142,8 @@ const Publish = ({ token }) => {
                   // Réinitialise les states de l'image
                   setPicture(null);
                   setImageUrl(null);
+                  // Recrée l'input pour retirer aussi le nom du fichier sélectionné.
+                  setFileInputKey(fileInputKey + 1);
                 }}
               >
                 X
@@ -171,7 +185,7 @@ const Publish = ({ token }) => {
             type="text"
             name="brand"
             id="brand"
-            placeholder="ex: Adidas"
+            placeholder="ex : Adidas"
             value={formValues.brand}
             onChange={formValuesOnChange}
           />
@@ -181,7 +195,7 @@ const Publish = ({ token }) => {
             type="text"
             name="size"
             id="size"
-            placeholder="ex: L / 40 / 12"
+            placeholder="ex : L / 40 / 12"
             value={formValues.size}
             onChange={formValuesOnChange}
           />
@@ -191,7 +205,7 @@ const Publish = ({ token }) => {
             type="text"
             name="color"
             id="color"
-            placeholder="ex: DarkMagenta"
+            placeholder="ex : DarkMagenta"
             value={formValues.color}
             onChange={formValuesOnChange}
           />
@@ -201,7 +215,7 @@ const Publish = ({ token }) => {
             type="text"
             name="condition"
             id="condition"
-            placeholder="ex: Neuf"
+            placeholder="ex : Neuf"
             value={formValues.condition}
             onChange={formValuesOnChange}
           />
@@ -211,7 +225,7 @@ const Publish = ({ token }) => {
             type="text"
             name="city"
             id="city"
-            placeholder="ex: Paris"
+            placeholder="ex : Paris"
             value={formValues.city}
             onChange={formValuesOnChange}
           />

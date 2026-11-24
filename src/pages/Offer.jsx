@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ElmoAvatar from "../assets/avatar_elmo.png";
 import DefaultAvatar from "../assets/avatard_3D.png";
+import { useNavigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const Offer = () => {
   // Récupère l’identifiant de l’annonce depuis l’URL /offers/:id
@@ -10,6 +12,7 @@ const Offer = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,7 +100,29 @@ const Offer = () => {
                 <p>{data.owner.account.username}</p>
               </div>
 
-              <button>Acheter</button>
+              <button
+                onClick={() => {
+                  if (Cookie.get("token")) {
+                    // Transmet les informations de l'annonce à la page Payment.
+                    navigate("/payment", {
+                      state: {
+                        title: data.product_name,
+                        price: data.product_price,
+                      },
+                    });
+                  } else {
+                    // Redirige vers Login en conservant l'annonce pour la suite du paiement.
+                    navigate("/login?ref_url=%2Fpayment", {
+                      state: {
+                        title: data.product_name,
+                        price: data.product_price,
+                      },
+                    });
+                  }
+                }}
+              >
+                Acheter
+              </button>
             </div>
           </div>
         </section>

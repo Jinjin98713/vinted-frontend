@@ -840,3 +840,183 @@ header {
   text-align: center;
   margin-bottom: 10px;
 }
+
+/* ========================================================================== */
+/* 10 - PAGE PAYMENT / STRUCTURE */
+/* ========================================================================== */
+
+.payment-page-background {
+  min-height: calc(100vh - 60px);
+  background-color: #ebedee;
+  padding: 45px 20px 70px;
+}
+
+.payment-page {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.payment-page > h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #252525;
+  margin-bottom: 12px;
+}
+
+.payment-page-intro {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 28px;
+}
+
+.payment-page-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.payment-form-section,
+.payment-summary-section {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.payment-form-section {
+  flex: 1 1 520px;
+  min-width: 0;
+}
+
+.payment-summary-section {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+
+.payment-form-section h2,
+.payment-summary-section h2 {
+  font-size: 19px;
+  font-weight: 600;
+  color: #252525;
+  margin-bottom: 16px;
+}
+
+.payment-form-section > p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* ========================================================================== */
+/* 10.1 - PAGE PAYMENT / FORMULAIRE STRIPE */
+/* ========================================================================== */
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.payment-submit {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  color: white;
+  background-color: #007f88;
+  border: none;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.payment-submit:hover {
+  background-color: #00676f;
+}
+
+.payment-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.payment-error {
+  padding: 12px;
+  color: #a92727;
+  background-color: #fff0f0;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.payment-success {
+  padding: 24px;
+  background-color: #edf8f5;
+  border: 1px solid #b7e4df;
+  border-radius: 8px;
+}
+
+.payment-success h3 {
+  font-size: 19px;
+  font-weight: 600;
+  color: #00676f;
+  margin-bottom: 10px;
+}
+
+.payment-success p {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ========================================================================== */
+/* 10.2 - PAGE PAYMENT / RECAPITULATIF */
+/* ========================================================================== */
+
+.payment-summary-label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.payment-summary-title {
+  color: #252525;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  margin-bottom: 26px;
+}
+
+.payment-summary-price,
+.payment-summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.payment-summary-price {
+  padding-bottom: 18px;
+  color: #555;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.payment-summary-total {
+  padding: 20px 0;
+  color: #252525;
+  font-weight: 600;
+}
+
+.payment-summary-note {
+  color: #777;
+  background-color: #f1f4f4;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}

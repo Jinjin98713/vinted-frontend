@@ -1,11 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookie from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Le même formulaire sert à la modale et à la page de connexion.
 const Signup = ({ setToken, setVisible, redirectTo = null }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   // States pour stocker les informations saisies dans le formulaire
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -43,9 +44,12 @@ const Signup = ({ setToken, setVisible, redirectTo = null }) => {
       // Ferme la modale si elle est ouverte.
       setVisible(false);
 
-      // Une inscription depuis /login permet ensuite de publier l'annonce.
+      // Après inscription, revient vers la page demandée avec les données de l'annonce.
       if (redirectTo) {
-        navigate(redirectTo, { replace: true });
+        navigate(redirectTo, {
+          replace: true,
+          state: location.state,
+        });
       }
     } catch (error) {
       // Si la requête échoue, affiche le message d'erreur

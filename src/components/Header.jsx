@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Vinted_logo.png";
 import DefaultAvatar from "../assets/avatar_elmo.png"; // Avatar affiché dans le Header connecté
 import Cookie from "js-cookie";
@@ -8,6 +8,7 @@ const Header = (props) => {
   const { token, setToken, setVisible, setActiveTab, search, setSearch } =
     props;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   // Texte saisi localement : la recherche ne part qu'à la validation du formulaire.
   const [searchInput, setSearchInput] = useState(search);
 
@@ -28,8 +29,9 @@ const Header = (props) => {
     // Empêche le rechargement de la page lors de la soumission
     event.preventDefault();
 
-    // Met à jour le state search dans App.jsx pour lancer la recherche
+    // Lance la recherche et affiche les résultats sur la Home.
     setSearch(searchInput);
+    navigate("/");
   };
 
   return (
