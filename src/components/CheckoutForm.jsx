@@ -70,6 +70,12 @@ const CheckoutForm = ({ title, price }) => {
         redirect: "if_required",
       });
 
+      /* console.log(
+        "Montant réellement payé :",
+        stripeResponse.paymentIntent?.amount,
+      ); */
+      //après le paiement je récupère bien le même montant que j'ai payé en centimes
+
       // Affiche une erreur si Stripe refuse ou ne peut pas confirmer le paiement.
       if (stripeResponse.error) {
         setErrorMessage(stripeResponse.error.message);

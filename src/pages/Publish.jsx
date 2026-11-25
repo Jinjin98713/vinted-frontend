@@ -115,12 +115,20 @@ const Publish = ({ token }) => {
           <h2>Photos</h2>
 
           {/* Permet de sélectionner une image */}
+
+          {/* Permet de sélectionner une image */}
           <input
             key={fileInputKey}
             type="file"
+            id="picture"
+            className="publish-picture-input"
             accept="image/*"
             onChange={pictureOnChange}
           />
+
+          <label htmlFor="picture" className="publish-picture-label">
+            {picture ? "Changer la photo" : "Ajouter une photo"}
+          </label>
 
           {/* Affiche l'aperçu uniquement si une image a été sélectionnée */}
           {picture && (

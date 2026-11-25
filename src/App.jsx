@@ -7,6 +7,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useSearchParams,
 } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -16,14 +17,25 @@ import Publish from "./pages/Publish";
 import LoginPage from "./pages/LoginPage";
 import Payment from "./pages/Payment";
 
-function App() {
+function AppContent() {
   const [offers, setOffers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [count, setCount] = useState(0);
+
   // Affiche ou masque la modale de connexion / inscription.
   const [visible, setVisible] = useState(false);
 
-  // Texte validé dans le Header : déclenche le chargement des annonces filtrées.
-  const [search, setSearch] = useState("");
+  // Récupère les filtres présents dans l'URL.
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const search = searchParams.get("title") || "";
+  const priceMin = searchParams.get("priceMin") || "";
+  const priceMax = searchParams.get("priceMax") || "";
+  const sort = searchParams.get("sort") || "";
+
+  const pageParam = Number(searchParams.get("page"));
+  const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
+  const limit = 20;
 
   // Détermine si Login ou Signup est visible, dans la modale et sur /login.
   const [activeTab, setActiveTab] = useState("login");
@@ -31,35 +43,125 @@ function App() {
   // Initialise la session React avec le token enregistré dans les cookies.
   const [token, setToken] = useState(Cookie.get("token") || null);
 
+  // Texte validé dans le Header : déclenche le chargement des annonces filtrées.
+  const setSearch = (value) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (value) {
+      params.set("title", value);
+    } else {
+      params.delete("title");
+    }
+
+    params.delete("page");
+    setSearchParams(params);
+  };
+
+  // Met à jour les filtres de prix et le tri.
+  const updateFilters = (newPriceMin, newPriceMax, newSort) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (newPriceMin !== "") {
+      params.set("priceMin", newPriceMin);
+    } else {
+      params.delete("priceMin");
+    }
+
+    if (newPriceMax !== "") {
+      params.set("priceMax", newPriceMax);
+    } else {
+      params.delete("priceMax");
+    }
+
+    if (newSort) {
+      params.set("sort", newSort);
+    } else {
+      params.delete("sort");
+    }
+
+    params.delete("page");
+    setSearchParams(params);
+  };
+
+  // Change de page en conservant les filtres.
+  const changePage = (newPage) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (newPage === 1) {
+      params.delete("page");
+    } else {
+      params.set("page", String(newPage));
+    }
+
+    setSearchParams(params);
+  };
+
   useEffect(() => {
+    let isCurrentRequest = true;
+
     const fetchData = async () => {
       // Une nouvelle recherche déclenche un nouvel affichage de chargement.
       setIsLoading(true);
+
       try {
-        // Récupère les annonces correspondant à la recherche de l'utilisateur.
+        const params = {
+          page: page,
+          limit: limit,
+        };
+
+        if (search) {
+          params.title = search;
+        }
+
+        if (priceMin !== "") {
+          params.priceMin = priceMin;
+        }
+
+        if (priceMax !== "") {
+          params.priceMax = priceMax;
+        }
+
+        if (sort) {
+          params.sort = sort;
+        }
+
+        // Récupère les annonces correspondant aux filtres.
         const response = await axios.get(
-          "https://lereacteur-vinted-api.herokuapp.com/offers?title=" +
-            encodeURIComponent(search),
+          "https://lereacteur-vinted-api.herokuapp.com/offers",
+          { params: params },
         );
-        // encodeURIComponent() adapte le texte recherché pour son utilisation dans une URL.
-        // Par exemple, "Nike & Adidas" devient "Nike%20%26%20Adidas".
+
         // Le backend renvoie notamment { count, offers }.
-        setOffers(response.data.offers);
+        if (isCurrentRequest) {
+          setOffers(response.data.offers);
+          setCount(response.data.count);
+        }
       } catch (error) {
-        console.log("Erreur lors du chargement des annonces :", error.message);
-        setOffers([]);
+        if (isCurrentRequest) {
+          console.log(
+            "Erreur lors du chargement des annonces :",
+            error.message,
+          );
+          setOffers([]);
+          setCount(0);
+        }
       } finally {
-        // Arrête le chargement aussi si l'API est indisponible.
-        setIsLoading(false);
+        if (isCurrentRequest) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchData();
-    // Le tableau [search] relance la récupération à chaque recherche validée.
-  }, [search]);
+
+    // Ignore les résultats d'une ancienne recherche.
+    return () => {
+      isCurrentRequest = false;
+    };
+  }, [search, priceMin, priceMax, sort, page]);
 
   return (
-    <Router>
+    <>
       <Header
         token={token}
         setToken={setToken}
@@ -81,10 +183,22 @@ function App() {
                 <p>Chargement des annonces...</p>
               </div>
             ) : (
-              <Home offers={offers} search={search} />
+              <Home
+                offers={offers}
+                search={search}
+                priceMin={priceMin}
+                priceMax={priceMax}
+                sort={sort}
+                updateFilters={updateFilters}
+                count={count}
+                page={page}
+                limit={limit}
+                changePage={changePage}
+              />
             )
           }
         />
+
         <Route path="/offers/:id" element={<Offer />} />
 
         {/* Le formulaire est réservé aux utilisateurs avec un token. */}
@@ -111,6 +225,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="/payment"
           element={
@@ -132,6 +247,14 @@ function App() {
           setToken={setToken}
         />
       )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

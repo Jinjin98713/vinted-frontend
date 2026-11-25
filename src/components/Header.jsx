@@ -1,16 +1,24 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../assets/Vinted_logo.png";
 import DefaultAvatar from "../assets/avatar_elmo.png"; // Avatar affiché dans le Header connecté
 import Cookie from "js-cookie";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = (props) => {
   const { token, setToken, setVisible, setActiveTab, search, setSearch } =
     props;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
   // Texte saisi localement : la recherche ne part qu'à la validation du formulaire.
   const [searchInput, setSearchInput] = useState(search);
+
+  // Synchronise le champ avec les paramètres de l'URL.
+  useEffect(() => {
+    setSearchInput(search);
+  }, [search]);
 
   const searchOnChange = (event) => {
     // Récupère le texte saisi
@@ -30,8 +38,20 @@ const Header = (props) => {
     event.preventDefault();
 
     // Lance la recherche et affiche les résultats sur la Home.
-    setSearch(searchInput);
-    navigate("/");
+    if (location.pathname !== "/") {
+      const params = new URLSearchParams(location.search);
+
+      if (searchInput) {
+        params.set("title", searchInput);
+      } else {
+        params.delete("title");
+      }
+
+      params.delete("page");
+      navigate("/?" + params.toString());
+    } else {
+      setSearch(searchInput);
+    }
   };
 
   return (
@@ -42,11 +62,8 @@ const Header = (props) => {
           <Link
             to="/"
             onClick={() => {
-              // Réinitialise le champ de recherche
+              // Réinitialise le champ de recherche et les résultats.
               setSearchInput("");
-
-              // Réinitialise les résultats de recherche
-              setSearch("");
             }}
           >
             <img src={Logo} alt="Logo Vinted" />
@@ -87,6 +104,7 @@ const Header = (props) => {
                     <Link to="/publish" onClick={() => setIsMenuOpen(false)}>
                       Vends tes articles
                     </Link>
+
                     <button
                       type="button"
                       className="logout-button"
@@ -125,6 +143,7 @@ const Header = (props) => {
               </>
             )}
           </div>
+
           {token ? (
             <Link to="/publish" className="sell-button">
               Vends tes articles

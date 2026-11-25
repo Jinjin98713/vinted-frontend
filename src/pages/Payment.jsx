@@ -19,10 +19,18 @@ const Payment = () => {
     return <p>Aucune annonce valide sélectionnée pour le paiement.</p>;
   }
 
+  // Ici, tu calcules les frais et le montant total
+  const priceInCents = Math.round(Number(price) * 100);
+
+  const buyerProtection = Math.round(priceInCents * 0.1);
+  const shippingCost = Math.round(priceInCents * 0.2);
+
+  const totalPrice = priceInCents + buyerProtection + shippingCost;
+
   // Configure Stripe avec le montant en centimes et la devise en euros.
   const options = {
     mode: "payment",
-    amount: Math.round(Number(price) * 100),
+    amount: totalPrice,
     currency: "eur",
 
     // Permet de personnaliser l'apparence du formulaire Stripe.
@@ -46,7 +54,7 @@ const Payment = () => {
             <p>Choisis ton moyen de paiement puis valide ta commande.</p>
 
             <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm title={title} price={Number(price)} />
+              <CheckoutForm title={title} price={totalPrice / 100} />
             </Elements>
           </section>
 
@@ -56,12 +64,24 @@ const Payment = () => {
             <p className="payment-summary-label">Article</p>
             <p className="payment-summary-title">{title}</p>
             <div className="payment-summary-price">
-              <span>Prix de l'article</span>
-              <span>{Number(price).toFixed(2)} €</span>
+              <div>
+                <span>Prix de l'article</span>
+                <span>{Number(price).toFixed(2)} €</span>
+              </div>
+
+              <div>
+                <span>Protection acheteur</span>
+                <span>{(buyerProtection / 100).toFixed(2)} €</span>
+              </div>
+
+              <div>
+                <span>Frais de port</span>
+                <span>{(shippingCost / 100).toFixed(2)} €</span>
+              </div>
             </div>
             <div className="payment-summary-total">
               <span>Total à payer</span>
-              <span>{Number(price).toFixed(2)} €</span>
+              <span>{(totalPrice / 100).toFixed(2)} €</span>{" "}
             </div>
             <p className="payment-summary-note">
               Paiement de test réalisé avec Stripe. Aucun achat réel n'est
